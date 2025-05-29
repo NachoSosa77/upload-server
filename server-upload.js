@@ -1,9 +1,11 @@
 // server-upload.js
+import cors from "cors";
 import express from "express";
 import fs from "fs";
 import multer from "multer";
 import path from "path";
 
+app.use(cors());
 const app = express();
 const PORT = 4000;
 
@@ -29,9 +31,9 @@ const upload = multer({ storage });
 
 app.post("/upload", upload.array("files"), (req, res) => {
   console.log("POST /upload recibido");
-  const domain = "http://localhost:4000"; // O variable de entorno
+  const domain = "https://vps-4706926-x.dattaweb.com"; // O variable de entorno
 
-  const archivosInfo = req.files.map(file => {
+  const archivosInfo = req.files.map((file) => {
     const url = `${domain}/archivos/${file.filename}`;
     const tipo_archivo = file.mimetype.includes("pdf") ? "pdf" : "imagen";
     return { url, tipo_archivo };
@@ -45,5 +47,5 @@ app.post("/upload", upload.array("files"), (req, res) => {
 app.use("/archivos", express.static(UPLOAD_DIR));
 
 app.listen(PORT, () => {
-  console.log(`Servidor de archivos escuchando en http://localhost:${PORT}`);
+  console.log(`Servidor escuchando en http://0.0.0.0:${PORT}`);
 });
