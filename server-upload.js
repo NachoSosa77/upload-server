@@ -5,8 +5,8 @@ import fs from "fs";
 import multer from "multer";
 import path from "path";
 
-app.use(cors());
 const app = express();
+app.use(cors());
 const PORT = 4000;
 
 // Carpeta para guardar archivos
